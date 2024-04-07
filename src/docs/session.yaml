@@ -1,0 +1,184 @@
+paths:
+  /api/session:
+    get:
+      summary: Renderizar página de inicio de sesión
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/viewRegister:
+    get:
+      summary: Renderizar página de registro
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/login:
+    post:
+      summary: Iniciar sesión de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Correo electrónico del usuario
+                password:
+                  type: string
+                  description: Contraseña del usuario
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          description: Credenciales inválidas
+      tags:
+        - Session
+
+  /api/session/githublogin:
+    get:
+      summary: Iniciar autenticación de GitHub
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/githubcallback:
+    get:
+      summary: Callback de autenticación de GitHub
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/register:
+    post:
+      summary: Registrar nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firest_name:
+                  type: string
+                  description: Nombre del usuario
+                last_name:
+                  type: string
+                  description: Apellido del usuario
+                age:
+                  type: integer
+                  description: Edad del usuario
+                email:
+                  type: string
+                  description: Correo electrónico del usuario
+                password:
+                  type: string
+                  description: Contraseña del usuario
+              required:
+                - firest_name
+                - last_name
+                - age
+                - email
+                - password
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          description: Solicitud incorrecta
+      tags:
+        - Session
+
+  /api/session/logout:
+    get:
+      summary: Cerrar sesión del usuario
+      responses:
+        '302':
+          description: Redireccionar a la página de inicio
+      tags:
+        - Session
+
+  /api/session/current:
+    get:
+      summary: Obtener perfil actual del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/reminder/{email}:
+    get:
+      summary: Enviar recordatorio de recuperación de contraseña al correo electrónico del usuario
+      parameters:
+        - in: path
+          name: email
+          schema:
+            type: string
+          required: true
+          description: Correo electrónico del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/recovery:
+    get:
+      summary: Renderizar página de recuperación de contraseña
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/recoveryPass:
+    get:
+      summary: Renderizar página de confirmación de recuperación de contraseña
+      parameters:
+        - in: query
+          name: expirationTime
+          schema:
+            type: string
+            format: date-time
+          required: true
+          description: Tiempo de expiración del enlace de recuperación
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session
+
+  /api/session/{_id}/change/{newPassword}:
+    put:
+      summary: Actualizar contraseña del usuario
+      parameters:
+        - in: path
+          name: _id
+          schema:
+            type: string
+          required: true
+          description: ID del usuario
+        - in: path
+          name: newPassword
+          schema:
+            type: string
+          required: true
+          description: Nueva contraseña del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Session

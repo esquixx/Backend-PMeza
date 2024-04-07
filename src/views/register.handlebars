@@ -1,0 +1,31 @@
+<a href="/" class="btn btn-secondary mb-3 m-3">Home</a>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Register
+            </div>
+            <div class="card-body">
+                <form action="/api/session/register" method="POST">
+                    <h1>Register</h1>
+                    <div class="mb-3">
+                        <input id="firest_name" name="firest_name" type="text" class="form-control" placeholder="First Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input id="last_name" name="last_name" type="text" class="form-control" placeholder="Last Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input id="age" name="age" type="text" class="form-control" placeholder="Age" required>
+                    </div>
+                    <div class="mb-3">
+                        <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <button type="submit" id="register" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

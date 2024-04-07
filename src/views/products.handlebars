@@ -1,0 +1,260 @@
+<a href="/" class="btn btn-secondary mt-5 m-3">Home</a>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+
+      <h2>
+        <input id="query" class="form-control" placeholder="Search product" value="{{payload.query}}">
+        <button id="search" class="btn btn-primary">Search</button>
+      </h2>
+      <label for="stockOnly">Stock:</label>
+      <input id="stockOnly" class="form-check-input" type="checkbox"><br><br>
+      <label for="category">Category:</label>
+      <select id="category" name="category" class="form-select">
+        <option value="">Seleccionar</option>
+        <option value="">Todas las categorias</option>
+        {{#each categorys}}
+        <option value={{this}}>{{this}}</option>
+        {{/each}}
+      </select>
+      <br><br>
+      <label for="order">Ordenar por precio:</label>
+      <select id="order" name="order" class="form-select">
+        <option value="asc">de menor a mayor</option>
+        <option value="desc">de mayor a menor</option>
+      </select>
+      <h2>----------------------------------------</h2>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+        {{#each payload.docs}}
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Product: {{this.title}}</h5>
+              <p class="card-text">Description: {{this.description}}</p>
+              <p class="card-text">Price: {{this.price}}</p>
+              <p class="card-text">Code: {{this.code}}</p>
+              <p class="card-text">Stock: {{this.stock}}</p>
+              <p class="card-text">Category: {{this.category}}</p>
+              {{#if ../payload.admin}}
+              <button class="btn btn-danger delete" data-product-id="{{this._id}}">Delete</button>
+              {{/if}}
+              {{#if this.isPremium}}
+              <button class="btn btn-danger delete" data-product-id="{{this._id}}">Delete</button>
+              {{/if}}
+              {{#unless ../payload.admin}}
+              {{#unless this.isPremium}}
+              <button class="btn btn-success add" data-cart-id="{{this._id}}">Add to cart</button>
+              {{/unless}}
+              {{/unless}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      <h2>----------------------------------------</h2>
+      <br>
+      <div>
+        <p>Total Docs: {{ payload.totalPages }}</p>
+        <p>Pages: {{payload.page}} / {{ payload.totalPages }}</p>
+        <p>Limit: <input id="limit" class="form-control" type="text" value={{ payload.limit }}></p>
+        <p>Page: <input id="page" class="form-control" type="text" value={{ payload.page }}></p>
+        <input id="nextPage" type="hidden" value="{{payload.nextPage}}">
+        <input id="prevPage" type="hidden" value="{{payload.prevPage}}">
+        {{#if payload.hasPrevPage}}
+        <a id="btnPrev" class="btn btn-primary" href="#">Previous</a>
+        {{/if}}
+        {{#if payload.hasNextPage}}
+        <a id="btnNext" class="btn btn-primary" href="#">Next</a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const queryParams = new URLSearchParams(window.location.search)
+    const btnAdd = document.querySelectorAll('.add')
+    const btnDelete = document.querySelectorAll('.delete')
+    const btnPrev = document.querySelector('#btnPrev')
+    const btnNext = document.querySelector('#btnNext')
+    const inpPage = document.querySelector('#page')
+    const btnSearch = document.querySelector('#search')
+    const btnCategory = document.querySelector('#category')
+    let stockOnlyCheckbox = document.querySelector('#stockOnly')
+    let checked = queryParams.get('stockOnly')
+    const order = document.querySelector('#order')
+    let sortOrder = queryParams.get('order')
+
+    if (sortOrder) {
+      console.log(sortOrder)
+      order.value = sortOrder
+    }
+
+    if (checked) {
+      stockOnlyCheckbox.checked = true
+    }
+
+    if (btnPrev) {
+
+
+      btnPrev.addEventListener('click', (event) => {
+        event.preventDefault()
+        const prevPage = document.querySelector('#prevPage').value
+        const limit = document.querySelector('#limit').value
+        const page = document.querySelector('#page').value
+        const query = document.querySelector('#query').value
+
+        const url = `/api/products/getProduct?page=${prevPage}&limit=${limit}&query=${query}`
+        document.location.href = url
+      })
+    }
+    else if (btnNext) {
+      btnNext.onclick = (event) => {
+        event.preventDefault()
+        const nextPage = document.querySelector('#nextPage').value
+        const limit = document.querySelector('#limit').value
+        const page = document.querySelector('#page').value
+        const query = document.querySelector('#query').value
+
+        const url = `/api/products/getProduct?page=${nextPage}&limit=${limit}&query=${query}`
+        document.location.href = url
+      }
+    }
+
+    inpPage.addEventListener('change', (event) => {
+      event.preventDefault()
+      const limit = document.querySelector('#limit').value
+      const page = document.querySelector('#page').value
+      const query = document.querySelector('#query').value
+
+      const url = `/api/products/getProduct?page=${page}&limit=${limit}&query=${query}`
+      document.location.href = url
+    })
+
+    btnSearch.onclick = (event) => {
+      event.preventDefault()
+      const limit = document.querySelector('#limit').value
+      const page = document.querySelector('#page').value
+      const query = document.querySelector('#query').value
+
+      const url = `/api/products/getProduct?page=${page}&limit=${limit}&query=${query}`
+      document.location.href = url
+
+    }
+
+    if (btnCategory) {
+      btnCategory.addEventListener('change', (event) => {
+        event.preventDefault()
+        const limit = document.querySelector('#limit').value
+        const page = document.querySelector('#page').value
+        const query = document.querySelector('#query').value
+        const category = document.querySelector('#category').value
+
+        const url = `/api/products/getProduct?page=${page}&limit=${limit}&query=${query}&category=${category}`
+        document.location.href = url
+      })
+    }
+
+    if (stockOnlyCheckbox) {
+      stockOnlyCheckbox.addEventListener('change', (event) => {
+        event.preventDefault()
+        const limit = document.querySelector('#limit').value
+        const page = document.querySelector('#page').value
+        const query = document.querySelector('#query').value
+        const category = document.querySelector('#category').value
+        const stockOnly = document.querySelector('#stockOnly').checked
+
+        let url = `/api/products/getProduct?page=${page}&limit=${limit}&query=${query}&category=${category}`
+        if (stockOnly) {
+          url += '&stockOnly=true'
+        }
+        document.location.href = url
+      })
+    }
+
+    if (order) {
+      order.addEventListener('change', (event) => {
+        event.preventDefault()
+        console.log("entro al cambio de order")
+        const limit = document.querySelector('#limit').value
+        const page = document.querySelector('#page').value
+        const query = document.querySelector('#query').value
+        const category = document.querySelector('#category').value
+        const stockOnly = document.querySelector('#stockOnly').checked
+        const order = document.querySelector('#order').value
+
+        let url = `/api/products/getProduct?page=${page}&limit=${limit}&query=${query}&category=${category}&order=${order}`
+        if (stockOnly) {
+          url += '&stockOnly=true'
+        }
+        document.location.href = url
+      })
+    }
+
+
+
+    if (btnAdd) {
+      btnAdd.forEach(button => {
+        button.onclick = async (event) => {
+          event.preventDefault()
+          const pid = button.dataset.cartId
+          const response = await fetch(`/api/carts`, { method: 'post' })  //creo el carrito
+          const cartId = await response.json(); // Suponiendo que el servidor devuelve un JSON con el ID
+
+          fetch(`/api/carts/${cartId.cartId}/product/${pid}`, { method: 'post' })
+            .then(() => {
+              Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '¡Producto agregado al carrito!',
+              }).then(() => {
+                document.location.href = '/api/products/getProduct';
+              })
+            })
+            .catch(e => {
+              Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'Ha ocurrido un error al agregar el producto al carrito.',
+              })
+            })
+        }
+      })
+    }
+
+   if (btnDelete) {
+    btnDelete.forEach(button => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const id = button.dataset.productId
+            try {
+                const response = await fetch(`/api/products/deleteProduct/${id}`, { method: 'delete' })
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Producto eliminado con éxito',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        document.location.href = '/api/products/getProduct'
+                    });
+                } else {
+                    throw new Error('No se puede eliminar el producto')
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                })
+            }
+        })
+    })
+}
+
+
+  })
+</script>

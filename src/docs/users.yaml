@@ -1,0 +1,62 @@
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Usuario
+  /api/users/premium/{uid}:
+    put:
+      summary: Cambiar rol de usuario a premium y viceversa
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Usuario
+  /api/users/updateRol/{uid}:
+    put:
+      summary: Actualizar rol de usuario
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Usuario
+  /api/users/deleteUser/{uid}:
+    delete:
+      summary: Eliminar usuario
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Usuario
+  /api/users/deleteInactive:
+    delete:
+      summary: Eliminar usuarios inactivos
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Usuario

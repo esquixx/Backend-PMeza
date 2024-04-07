@@ -1,0 +1,135 @@
+<a href="/" class="btn btn-secondary mt-5 m-3">Home</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col">
+
+
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <td>{{this.last_name}}</td>
+                        <td>{{this.email}}</td>
+                        <input class="userid" type="hidden" value="{{this._id}}">
+                        <td>
+                            <select class="role-select" id="roleSelect_{{this._id}}">
+                                <option id="rol">{{this.role}}</option>
+                                <option value="user">user</option>
+                                <option value="premium">premium</option>
+                                <option value="admin">admin</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger delete-btn" data-userid="{{this._id}}">X</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="text-center">
+                <button id="deleteInactiveUsersBtn" class="btn btn-dark">Borrar Usuarios Inactivos</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteInactiveUsersBtn = document.getElementById('deleteInactiveUsersBtn')
+
+        deleteInactiveUsersBtn.addEventListener('click', async function () {
+            try {
+                const response = await fetch('/api/users/deleteInactive', {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Usuarios eliminados',
+                        text: 'Los usuarios inactivos se han eliminado correctamente.',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    })
+                    location.reload()
+                } else {
+                    throw new Error('Error al borrar usuarios inactivos.')
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Ocurrió un error al intentar borrar usuarios inactivos.')
+            }
+        })
+        const roleSelects = document.querySelectorAll('.role-select');
+        roleSelects.forEach(select => {
+            select.addEventListener('change', async function (event) {
+                const uid = event.target.closest('tr').querySelector('.userid').value
+                const originalRole = event.target.dataset.originalRole;
+                const newRole = event.target.value;
+                if (newRole !== originalRole) {
+                    try {
+                        const response = await fetch(`/api/users/updateRol/${uid}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ role: newRole })
+                        });
+
+                        if (response.ok) {
+                            await Swal.fire({
+                                icon: 'success',
+                                title: 'Rol actualizado',
+                                text: 'El rol se ha actualizado correctamente.',
+                                timer: 2000,
+                                timerProgressBar: true,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            throw new Error('Error al actualizar el rol.')
+                        }
+                    } catch (error) {
+                        console.error(error)
+                        alert('Ocurrió un error al intentar actualizar el rol.')
+                    }
+                }
+            });
+        });
+    });
+
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async function (event) {
+            const userId = event.target.dataset.userid
+            try {
+                const response = await fetch(`/api/users/deleteUser/${userId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Usuario eliminado',
+                        text: 'El usuario se ha eliminado correctamente.',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                    location.reload();
+                } else {
+                    throw new Error('Error al eliminar usuario.')
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Ocurrió un error al intentar eliminar el usuario.')
+            }
+        });
+    })
+
+</script>

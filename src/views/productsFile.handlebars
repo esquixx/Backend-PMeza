@@ -1,0 +1,56 @@
+<a href="/">Home</a>
+
+{{#each payload}}
+<h2>----------------------------------------</h2>
+<h3><u>Product</u>: <span> {{this.title}}</span></h3>
+<h3><u>Description</u>: <span>{{this.Description}}</span></h3>
+<h3><u>price</u>: <span>{{this.price}}</span></h3>
+<h3><u>stock</u>: <span>{{this.stock}}</span></h3>
+<h3><u>category</u>: <span>{{this.category}}</span></h3>
+<button class="delete" data-product-id="{{this._id}}"> Delete</button>
+<button class="add" data-cart-id="{{this._id}}"> Add to cart</button>
+
+{{/each}}
+<h2>----------------------------------------</h2>
+
+<script>
+    const btnAdd = document.querySelectorAll('.add')
+    const btnDelete = document.querySelectorAll('.delete')
+    if (btnAdd) {
+      btnAdd.forEach(button => {
+        button.onclick = async (event) => {
+          event.preventDefault()
+          const pid = button.dataset.cartId
+          const response = await fetch(`/api/carts`, { method: 'post' })  //creo el carrito
+          const cartId = await response.json(); // Suponiendo que el servidor devuelve un JSON con el ID
+
+          fetch(`/api/carts/${cartId.cartId}/product/${pid}`, { method: 'post' })
+            .then(() => {
+              alert("producto agregado al carrito")
+              document.location.href = '/api/products/getProduct'
+            })
+            .catch(e => {
+              alert(e)
+            });
+        }
+
+      })
+    }
+
+    if (btnDelete) {
+      btnDelete.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const id = button.dataset.productId
+          fetch(`/api/products/deleteProduct/${id}`, { method: 'delete' })
+            .then(() => {
+              alert('Eliminado con éxito')
+              document.location.href = '/api/products/getProduct'
+            })
+            .catch(e => {
+              alert('No se puede eliminar el producto')
+            })
+        })
+      })
+    }
+</script>

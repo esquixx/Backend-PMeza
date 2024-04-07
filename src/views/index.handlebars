@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        {{#if userData}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/session/logout">Logout</a>
+        </li>
+        {{/if}}
+        {{#unless userData}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/session">Login</a>
+        </li>
+        {{/unless}}
+        {{#if admin}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/users/">Users</a>
+        </li>
+        {{/if}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/session/current">Perfil de usuario</a>
+        </li>
+        {{#if admin}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/products/ViewAddProduct">Add Product</a>
+        </li>
+        {{/if}}
+        {{#if isPremium}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/products/ViewAddProduct">Add Product</a>
+        </li>
+        {{/if}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/products/getProduct">List Product</a>
+        </li>
+        {{#unless admin}}
+        <li class="nav-item">
+          <a class="nav-link" href="/api/carts/getCart">Cart</a>
+        </li>
+        {{/unless}}
+        {{#unless admin}}
+         <li class="nav-item">
+          <a class="nav-link" href="/api/chats">Chat</a>
+        </li>
+         {{/unless}}
+      </ul>
+    </div>
+  </div>
+</nav>

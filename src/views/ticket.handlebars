@@ -1,0 +1,24 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/" class="btn btn-secondary mb-3">Home</a>
+            <h1>Gracias por tu compra</h1>
+            <h3>Nº de Ticket: {{ticket.code}}</h3>
+            <h4>FECHA: {{ticket.purchase_dateTime}}</h4>
+            <h4>Total: $ {{ticket.amount}}</h4>
+          
+            {{#each ticket.purchaser.products}}
+              <hr>
+            <h3>Los siguientes productos no pudieron procesarse por falta de stock</h3>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Producto: {{this.pid.title}}</h5>
+                    <p class="card-text">Stock solicitado: {{this.quantity}} de {{this.pid.stock}} disponibles</p>
+                </div>
+            </div>
+            <hr>
+            {{/each}}
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "app": "^0.1.0",
+    "bcrypt": "^5.1.1",
+    "commander": "^11.1.0",
+    "cookie-parse": "^0.4.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "mongoose-paginate-v2": "^1.8.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.9",
+    "nodemon": "^3.0.3",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.7.5",
+    "stripe": "^14.22.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "sweetalert2": "^11.10.1",
+    "winston": "^3.11.0"
+  },
+  "name": "backendecommerce",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "npm install # Ejecutar codigo         npm run dev # Autor          Juan Hernandez # Tecnologías utilizadas         Express.js         MongoDB         Socket.io         JWT         Swagger # Dependencias         @faker-js/faker         bcrypt         commander         cookie-parse         cookie-parser         cors         dotenv         express         express-handlebars         express-session         jsonwebtoken         mongoose         mongoose-paginate-v2         morgan         multer         nodemailer         nodemon         passport         passport-github2         passport-jwt         passport-local         socket.io         stripe         swagger-jsdoc         swagger-ui-express         sweetalert2         winston",
+  "devDependencies": {
+    "chai": "^5.1.0",
+    "mocha": "^10.3.0",
+    "supertest": "^6.3.4"
+  }
+}

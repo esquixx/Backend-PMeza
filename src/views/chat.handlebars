@@ -1,0 +1,22 @@
+<a href="/" class="btn btn-secondary m-3">Home</a>
+<div class="container mt-5">
+    <h2 class="text-center">Chat</h2>
+    <div class="row align-items-center">
+       <div class="col-auto">
+           <i>{{usuario}}</i>
+       </div>
+       <div class="col">
+           <input type="hidden" id="username" value="{{usuario}}">
+           <input type="text" id="chatinput" class="form-control">
+       </div>
+       <div class="col-auto">
+           <button id="send" class="btn btn-primary">Enviar</button>
+       </div>
+    </div>
+    <div id="chatbox" class="m-5">
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/static/index.js"></script>
+

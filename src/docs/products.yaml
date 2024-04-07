@@ -1,0 +1,155 @@
+paths:
+  /api/products/getProduct:
+    get:
+      summary: Obtener lista de productos
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Productos
+
+  /api/products/getProductById/{id}:
+    get:
+      summary: Obtener un producto por ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID del producto
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Productos
+
+  /api/products/ViewAddProduct:
+    get:
+      summary: Renderizar página para agregar producto
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Productos
+
+  /api/products/addProduct:
+    post:
+      summary: Agregar un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Título del producto
+                description:
+                  type: string
+                  description: Descripción del producto
+                price:
+                  type: number
+                  description: Precio del producto
+                thumbnail:
+                  type: string
+                  description: URL de la imagen del producto
+                code:
+                  type: string
+                  description: Código del producto
+                stock:
+                  type: integer
+                  description: Stock del producto
+                status:
+                  type: string
+                  description: Estado del producto
+                category:
+                  type: string
+                  description: Categoría del producto
+              required:
+                - title
+                - description
+                - price
+                - thumbnail
+                - code
+                - stock
+                - status
+                - category
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Productos
+
+  /api/products/updateProduct/{id}:
+    put:
+      summary: Actualizar un producto
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID del producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Título actualizado del producto
+                description:
+                  type: string
+                  description: Descripción actualizada del producto
+                price:
+                  type: number
+                  description: Precio actualizado del producto
+                thumbnail:
+                  type: string
+                  description: URL de la imagen actualizada del producto
+                code:
+                  type: string
+                  description: Código actualizado del producto
+                stock:
+                  type: integer
+                  description: Stock actualizado del producto
+                status:
+                  type: string
+                  description: Estado actualizado del producto
+                category:
+                  type: string
+                  description: Categoría actualizada del producto
+              required:
+                - title
+                - description
+                - price
+                - thumbnail
+                - code
+                - stock
+                - status
+                - category
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Productos
+
+  /api/products/deleteProduct/{id}:
+    delete:
+      summary: Eliminar un producto
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID del producto
+      responses:
+        '204':
+          description: Operación exitosa
+      tags:
+        - Productos

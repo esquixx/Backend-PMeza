@@ -1,0 +1,54 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crear carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+    get:
+      summary: Obtener carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agregar producto al carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+    delete:
+      summary: Eliminar producto del carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+    put:
+      summary: Actualizar cantidad de producto en el carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+  /api/carts/{cid}:
+    delete:
+      summary: Eliminar carrito
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carrito
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Realizar compra
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Carritos

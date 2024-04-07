@@ -1,0 +1,20 @@
+<div>
+ <a href="/">Home</a>
+  <h1>Carrito de Compras</h1>
+  {{#if cart.productsPopulate.length}}
+  <ul>
+    {{#each cart.productsPopulate}}
+    <hr>
+    <li>
+      <p>{{this.title}}</p>
+      <p>Precio: $ {{this.price}}</p>
+      <p>Cantidad: {{this.quantity}}</p>
+    </li>
+    <hr>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p>El carrito está vacío.</p>
+  {{/if}}
+  <button id="buy" data-cart-id='{{cart._id}}'>COMPRAR</button>
+</div>

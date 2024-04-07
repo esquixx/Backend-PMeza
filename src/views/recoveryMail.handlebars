@@ -1,0 +1,30 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3>Ingresa tu correo electrónico para restablecer tu contraseña</h3>
+                <div class="mb-3">
+                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                </div>
+                <button id="recovery" class="btn btn-primary">Enviar link</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const recoveryLink = document.querySelector('#recovery') 
+
+    recoveryLink.onclick = async(event) =>{
+        event.preventDefault()
+        const email = document.querySelector('#email').value 
+         fetch(`/api/session/reminder/${email}`, { method: 'get' })
+            .then(() => {
+              alert("Revisa tu correo")
+              document.location.href = '/api/session'
+            })
+            .catch(e => {
+              alert(e)
+            });
+
+    }
+</script>

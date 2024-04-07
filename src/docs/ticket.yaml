@@ -1,0 +1,9 @@
+paths:
+  /api/tickets/{tid}:
+    get:
+      summary: Obtener ticket por ID
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Ticket

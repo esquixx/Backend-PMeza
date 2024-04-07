@@ -1,0 +1,38 @@
+<div>
+    <h1>Recovery Password</h1>
+    <h4>Enter your new password</h4>
+    <input id="password" name="password" type="password" placeholder="Password"> <br><br>
+    <div id="error-message" style="color: red; font-size: small; display: none;">Password must be different from the previous one.</div><br>
+    <button id="change">Change Password</button>
+</div>
+<script>
+    const changeToLink = document.querySelector('#change')
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email')
+    const _id = urlParams.get('_id')
+   
+    changeToLink.onclick = async (event) => {
+        event.preventDefault()
+         const newPassword = document.querySelector("#password").value
+        fetch(`/api/session/${_id}/change/${newPassword}`, { method: 'put' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (data.payload === false) {
+                        // Contraseña igual a la anterior, mostrar mensaje de error
+                        document.getElementById('error-message').style.display = 'block';
+                    } else {
+                        // Contraseña actualizada con éxito
+                        alert("Password updated successfully")
+                        document.location.href = '/api/session';
+                    }
+                } else {
+                    alert("Error updating password");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error updating password");
+            })
+    }
+</script>

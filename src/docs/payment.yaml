@@ -1,0 +1,17 @@
+paths:
+  /api/payment/payment-intents:
+    post:
+      summary: Crear intento de pago
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Pago
+  /api/payment/paymentView:
+    get:
+      summary: Ver vista de pagos
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Pago

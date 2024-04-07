@@ -1,0 +1,25 @@
+paths:
+  /api/chat:
+    get:
+      summary: Ver chat
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Chat
+  /api/chat/message:
+    post:
+      summary: Enviar mensaje en el chat
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Chat
+  /api/chat/messages:
+    get:
+      summary: Obtener mensajes del chat
+      responses:
+        '200':
+          description: Operación exitosa
+      tags:
+        - Chat

@@ -1,0 +1,25 @@
+//EJECUTAR PROGRAMA =>   npm run dev
+
+//EJECUTAR CON PERSISTENCIA FILE  => npm run dev -- --persistence FILE
+
+//Usuario administrador :   user: admin   password: admin  (este usuario puede agregar productos, eliminar productos pero no puede agregar productos al carrito)
+
+//Importante, una ves clonado el proyecto hacer un npm i  y crear la carpeta   .env   con el contenido que figura abajo
+//.env
+/*
+PERSISTENCE=MONGO
+MONGO_URL=mongodb+srv://juanih1990:963258527415963@clustercursobackend.ddoeaet.mongodb.net/
+MONGO_DB_NAME=BackendEcommerce
+SECRET=secretForJWT
+CLIENT_ID=644379aa03d1f9a0e143
+CLIENT_SECRET=e00c5a89522e39f570e84699ad1a4bdf8995209fb
+CALLBACK_URL=http://localhost:8080/githubcallback
+PORT =8080
+USER=admin
+PASSWORD=admin 
+ENTORNO=desarrollo                             # el entorno puede ser desarrollo o produccion, lo podes modificar desde esta linea
+# para envios de mail
+MAIL_USER="tu email"  # ej: elpepes@gmail.com
+MAIL_PASS="tu clave"  # ej: fonaqibqcmyzkres
+
+*/

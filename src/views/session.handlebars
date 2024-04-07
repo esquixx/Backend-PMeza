@@ -1,0 +1,28 @@
+<a href="/" class="btn btn-secondary mb-3 m-3">Home</a>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                <form action="/api/session/login" method="POST">
+                    <a href="/api/session/githublogin" class="btn btn-secondary mb-3">GitHub</a>
+                    <h1>Login</h1>
+                    <div class="mb-3">
+                        <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <a id="recovery" href="/api/session/recovery" class="mb-3">I forgot my password</a>
+                    {{#if payload}}
+                    <div id="error-message" class="mb-3" style="color: red; font-size: small;"><strong>Error:</strong> The link has expired. If you wish to request a new link, please press <i>forgot my password</i> again.</div>
+                    {{/if}}
+                    <a id="register" href="/api/session/viewRegister" class="btn btn-info text-white me-2">Register</a>
+                    <button type="submit" id="login" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

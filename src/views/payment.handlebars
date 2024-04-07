@@ -1,0 +1,91 @@
+<div class="container">
+    <form id="payment-form" class="my-4">
+        <div id="card-element" class="form-control"><!-- Elemento para la tarjeta de crédito --></div>
+        <button id="submit" class="btn btn-primary mt-3">Pagar</button>
+    </form>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const PublicKeyPayment = "pk_test_51Oxve9G7nWOnX2ElELQczdn7OpG1v1F9BYFqpAaKMZuBbjnzX33agivOO2NYOA2wXrlxKDFFPLPgKVLdNEdIbNi900SYjjCgAg";
+    const stripe = Stripe(PublicKeyPayment);
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    const form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        // Obtener la ID del carrito de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const cartId = urlParams.get('cartId');
+        if (!cartId) {
+            console.error('No se pudo encontrar la ID del carrito en la URL');
+            return;
+        }
+
+        // Realizar una solicitud al backend para obtener el client_secret
+        const response = await fetch('/api/payment/payment-intents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cartId: cartId,
+            }),
+        });
+
+        const responseData = await response.json();
+        console.log("Response: " + JSON.stringify(responseData));
+        const client_secret = responseData.payload.client_secret;
+
+        // Confirmar el pago con Stripe utilizando el client_secret obtenido
+        const { paymentIntent, error } = await stripe.confirmCardPayment(client_secret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: 'Nombre del Titular de la Tarjeta', // Obtén esto del formulario
+                },
+            }
+        });
+
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: error.message
+            })
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '¡Pago realizado con éxito!'
+            }).then((result) => {
+                // Redirige a la página de ticket después de que el usuario haga clic en "Aceptar"
+                if (result.isConfirmed) {
+
+                  
+                    console.log(paymentIntent);
+                    fetch(`/api/carts/${cartId}/purchase`, { method: 'post' })
+                        .then((res) => {
+                            if (!res.ok) {
+                                throw new Error('Error al generar el ticket');
+                            }
+                            return res.json();
+                        })
+                        .then((data) => {
+                            window.location.href = `/api/ticket/${data.ticket}`
+                        })
+                        .catch(e => {
+                            alert(e)
+
+                        })
+                }
+            })
+
+
+        }
+    });
+</script>
