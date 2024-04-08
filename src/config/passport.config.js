@@ -9,10 +9,10 @@ const JWTStrategy = passporJWT.Strategy
 
 const initializePassport = () => {
 
-    passport.use('github' , new GithubStrategy({
+    passport.use('github' , new githubStrategy({
             clientID: config.CLIENT_ID,
             clientSecret: config.CLIENT_SECRET,
-            CALLBACK_URL: config.CALLBACK_URL
+            callbackUrl: config.CALLBACK_URL
         }  , async (accesToken , refreshToken , profile , done) => {
                 console.log(profile)
                 try {
