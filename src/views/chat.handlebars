@@ -1,22 +1,57 @@
-<a href="/" class="btn btn-secondary m-3">Home</a>
-<div class="container mt-5">
-    <h2 class="text-center">Chat</h2>
-    <div class="row align-items-center">
-       <div class="col-auto">
-           <i>{{usuario}}</i>
-       </div>
-       <div class="col">
-           <input type="hidden" id="username" value="{{usuario}}">
-           <input type="text" id="chatinput" class="form-control">
-       </div>
-       <div class="col-auto">
-           <button id="send" class="btn btn-primary">Enviar</button>
-       </div>
-    </div>
-    <div id="chatbox" class="m-5">
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/static/index.js"></script>
+<title>Chat</title>
+    <style>
+        body {
+            background-image: url(https://tierragamer.com/wp-content/uploads/2022/03/Whatsapp-voz-goku.jpg); /* Reemplaza la URL con la dirección de tu imagen de fondo */
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .container {
+            background-color: rgba(255, 255, 255, 0.7); /* Ajusta la opacidad del fondo del contenedor */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Estilos adicionales según tu preferencia */
+        .btn {
+            margin-bottom: 20px;
+        }
+
+        #chatbox {
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="btn btn-secondary m-3">Home</a>
+    <div class="container mt-5">
+        <h2 class="text-center">Chat</h2>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <i>{{usuario}}</i>
+            </div>
+            <div class="col">
+                <input type="hidden" id="username" value="{{usuario}}">
+                <input type="text" id="chatinput" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button id="send" class="btn btn-primary">Enviar</button>
+            </div>
+        </div>
+        <div id="chatbox" class="m-5">
+            <!-- Contenido del chat -->
+        </div>
+    </div>
+
+    <!-- Agrega aquí tus scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/index.js"></script>
+</body>
